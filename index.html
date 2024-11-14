@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alphabet4ICT by Abu Momen</title>
+    <meta name="author" content="Abu Momen">
+    <meta name="description"
+        content="Explore ICT terms interactively with Alphabet4ICT. Learn key concepts by clicking on letters A-Z. Engage with ICT through an intuitive and fun learning experience.">
+    <meta name="keywords" content="ICT, Alphabet, Interactive Learning, ICT Terms, Abu Momen, Educational App">
+    <meta property="og:title" content="Alphabet4ICT - Interactive ICT Learning">
+    <meta property="og:description"
+        content="Learn ICT concepts interactively with Alphabet4ICT by Abu Momen. Click letters to explore essential ICT terms and descriptions.">
+    <meta property="og:image" content="path/to/preview-image.jpg">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://softfaculty.com/alphabet4ict/alphabet4ict.html">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Alphabet4ICT - Interactive ICT Learning">
+    <meta name="twitter:description"
+        content="Explore key ICT terms interactively by clicking letters A-Z. Learn and have fun with this educational app.">
+    <meta name="twitter:image" content="path/to/preview-image.jpg">
+    <link rel="icon" href="ICT4Speak.jpg" type="image/x-icon">
+
+    <!-- Structured Data for SEO -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "Alphabet4ICT",
+        "url": "https://softfaculty.com/alphabet4ict/alphabet4ict.html",
+        "author": {
+            "@type": "Person",
+            "name": "Abu Momen"
+        },
+        "description": "An interactive educational app to explore ICT-related terms from A to Z. Learn about ICT concepts interactively and have fun while learning.",
+        "applicationCategory": "Education",
+        "operatingSystem": "All",
+        "image": "path/to/preview-image.jpg",
+        "datePublished": "2024-11-07"
+    }
+    </script>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #e0f7fa;
+            padding: 10px;
+        }
+
+        .container {
+            text-align: center;
+            max-width: 100%;
+            padding: 10px;
+            background-color: #ffffff;
+            border-radius: 10px;
+            border: 2px solid red;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            max-height: 400px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative;
+        }
+
+        .letters-wrapper {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            /* Four letters per row */
+            grid-gap: 1px;
+            /* Gap between the letters */
+            flex-grow: 1;
+            overflow-y: auto;
+            /* Enable scrolling if needed */
+        }
+
+        .letter {
+            font-size: 20px;
+            margin: 2px 15px;
+            padding: 6px;
+            background-color: #06cb2d;
+            color: white;
+            border-radius: 50%;
+            cursor: pointer;
+            display: inline-block;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        .letter:hover {
+            background-color: #00796b;
+            transform: scale(1.1);
+        }
+
+        .clicked {
+            background-color: yellow;
+            color: black;
+        }
+
+        #displayText {
+            bottom: 0;
+            color: blue;
+            padding: 10px;
+            /* Padding is 10px for consistency */
+            font-size: 16px;
+            font-weight: bold;
+            /* Font size of 16px */
+            line-height: 1px;
+            /* Adjust line-height for better readability */
+            background-color: yellow;
+            border: 2px solid #26a69a;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s ease, color 0.3s ease;
+            width: 80%;
+            text-align: center;
+            margin: 0 auto;
+            position: relative;
+        }
+
+
+
+        #alphabetText {
+            display: inline-block;
+            /* Ensure it takes only text width */
+            background-color: yellow;
+            padding: 2px 5px;
+            border-radius: 5px;
+            font-weight: bold;
+            font-size: 16px;
+            color: blue;
+            margin: 0 auto;
+        }
+
+        #helpBtn {
+            position: absolute;
+            color: yellow;
+            left: 10px;
+            top: 5px;
+            padding: 2px 5px;
+            background-color: blue;
+            border-radius: 5px;
+        }
+
+        #EnableBtn {
+            position: absolute;
+            color: yellow;
+            right: 10px;
+            top: 5px;
+            padding: 2px 5px;
+            background-color: blue;
+            border-radius: 5px;
+        }
+
+        #helpText {
+            display: none;
+            text-align: left;
+            margin-top: 40px;
+            background-color: white;
+            border: 2px solid #007bff;
+            border-radius: 10px;
+            padding: 10px;
+            position: absolute;
+            z-index: 1000;
+            width: 80%;
+            max-width: 300px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .header-section {
+            background-color: lightblue;
+            padding: 5px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            position: relative;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header-section">
+            <button id="helpBtn">Help</button>
+
+            <!-- Alphabet text in the center -->
+            <div style="text-align: center;">
+                <span id="alphabetText">** Alphabet 4 ICT **</span>
+            </div>
+            <button id="EnableBtn">Audio</button>
+        </div>
+
+        <div id="helpText">
+            <!-- <p style="margin: 2px 0; color: blue; font-weight: bold; text-align: center;">
+                *** Alphabet for ICT ***
+            </p> -->
+            <p style="margin: 4px 0;color: blue; text-align: center;">
+                Click any letter to learn an ICT-related term.
+            </p>
+            <p style="text-align: justify; margin: 4px 0; color: rgb(183, 17, 233)">
+                Click the letter again to explore another term in ICT. You will also hear a description of each term,
+                and you can enable or disable audio by clicking on Audio button.
+            </p>
+
+            <p style="text-align: justify; margin: 4px 0; color: rgb(183, 17, 233)">
+
+                আইসিটি সম্পর্কিত কোনো শব্দ জানতে যেকোনো অক্ষরে ক্লিক করুন। নতুন আর একটি শব্দ জানার জন্য আবারও সেই অক্ষরে
+                ক্লিক করুন।
+                প্রতিটি শব্দের সংজ্ঞা / ব্যবহার শুনতে চাইলে অডিও চালু বা বন্ধ করতে Audio বাটনে ক্লিক করুন।
+
+            </p>
+        </div>
+
+        <div class="letters-wrapper">
+            <div class="letter" id="letterA">A</div>
+            <div class="letter" id="letterB">B</div>
+            <div class="letter" id="letterC">C</div>
+            <div class="letter" id="letterD">D</div>
+            <div class="letter" id="letterE">E</div>
+            <div class="letter" id="letterF">F</div>
+            <div class="letter" id="letterG">G</div>
+            <div class="letter" id="letterH">H</div>
+            <div class="letter" id="letterI">I</div>
+            <div class="letter" id="letterJ">J</div>
+            <div class="letter" id="letterK">K</div>
+            <div class="letter" id="letterL">L</div>
+            <div class="letter" id="letterM">M</div>
+            <div class="letter" id="letterN">N</div>
+            <div class="letter" id="letterO">O</div>
+            <div class="letter" id="letterP">P</div>
+            <div class="letter" id="letterQ">Q</div>
+            <div class="letter" id="letterR">R</div>
+            <div class="letter" id="letterS">S</div>
+            <div class="letter" id="letterT">T</div>
+            <div class="letter" id="letterU">U</div>
+            <div class="letter" id="letterV">V</div>
+            <div class="letter" id="letterW">W</div>
+            <div class="letter" id="letterX">X</div>
+            <div class="letter" id="letterY">Y</div>
+            <div class="letter" id="letterZ">Z</div>
+        </div>
+        <p id="displayText" style="margin-top: 10px;"></p>
+        <!-- <div style="text-align: center; font-size: 12px;">
+            <span style="background-color: rgb(247, 247, 187); padding: 2px 5px;">
+                Created By <b style="color: orange;">DreamCare</b> | &#169; 2024 All Rights Reserved
+            </span>
+        </div> -->
+
+        <div style="text-align: center; font-size: 12px; margin-top: 10px;">
+            <span style="background-color: rgb(247, 247, 187); padding: 2px 5px;">
+                Created By <b style="color: orange;">DreamCare</b> | &#169; 2024 All Rights Reserved
+            </span>
+        </div>
+
+    </div>
+
+    <script>
+        // Data for each letter
+        const data = {
+            A: {
+                terms: ['Algorithm', 'Artificial Intelligence'],
+                descriptions: [
+                    'Algorithm: A step-by-step procedure or formula for solving a problem or performing a task.',
+                    'Artificial Intelligence: The simulation of human intelligence in machines designed to perform tasks that typically require human cognitive functions, such as learning and problem-solving.'
+                ]
+            },
+            B: {
+                terms: ['Bandwidth', 'Blockchain'],
+                descriptions: [
+                    'Bandwidth: The amount of data that can be transmitted in a fixed amount of time.',
+                    'Blockchain: A decentralized digital ledger used to record transactions across many computers.'
+                ]
+            },
+            C: {
+                terms: ['Cybersecurity', 'Cloud Computing'],
+                descriptions: [
+                    'Cybersecurity: The practice of protecting systems, networks, and programs from digital attacks.',
+                    'Cloud Computing: The delivery of computing services over the internet, including storage, processing, and data management.'
+                ]
+            },
+
+
+            D: {
+                terms: ['Database', 'DNS'],
+                descriptions: [
+                    'Database:A structured collection of data that allows for easy access, retrieval, and management, widely used to store information in applications and systems',
+                    'DNS:Domain Name System-A system that converts human-readable domain names into IP addresses, allowing easy access to websites'
+                ]
+            },
+
+
+            E: {
+                terms: ['Ethernet', 'ERP'],
+                descriptions: [
+                    'Ethernet:A networking technology that enables wired communication in local area networks (LANs), allowing devices to share data and resources',
+                    'ERP:Enterprise Resource Planning-A software system that integrates various business functions, like accounting, HR, and inventory, to streamline processes and data management'
+                ]
+            },
+            F: {
+                terms: ['Firewall', 'Framework'],
+                descriptions: [
+                    'Firewall:A security device or software that monitors and controls incoming and outgoing',
+                    'Framework:A software structure that provides a foundation and reusable components for developing applications, simplifying and accelerating development'
+                ]
+            },
+            G: {
+                terms: ['Gigabyte', 'Gateway'],
+                descriptions: [
+                    'Gigabyte:GB-A unit of digital information storage equal to one billion bytes, commonly used to measure storage capacity in computers and devices',
+                    'Gateway:A network device that connects different networks and enables data flow between them, often acting as a point of entry or exit'
+                ]
+            },
+
+            H: {
+                terms: ['HTML', 'Hardware'],
+                descriptions: [
+                    'HTML:Hypertext Markup Language-The standard language for creating and structuring content on the web, forming the foundation of webpages',
+                    'Hardware:The physical components of a computer system, such as the CPU, memory, and storage devices, that perform computational tasks'
+                ]
+            },
+
+            I: {
+
+                terms: ['Internet', 'ISP'],
+                descriptions: [
+                    'Internet:A global network of interconnected computers that allows data exchange, communication, and access to information worldwide',
+                    'ISP:Internet Service Provider: A company that provides internet access to users via various methods, such as broadband, fiber, or mobile networks'
+                ]
+            },
+            J: {
+                terms: ['Java', 'JavaScript'],
+                descriptions: [
+                    'Java:A high-level programming language widely used for building web, mobile, and enterprise applications due to its platform independence',
+                    'JavaScript:A scripting language used to create interactive effects within web browsers, essential for modern web development'
+                ]
+            },
+
+            K: {
+                terms: ['Kbps', 'Kernel'],
+                descriptions: [
+                    'Kbps:Kilobits per second-A unit of data transfer rate, commonly used to measure internet and network speeds',
+                    'Kernel:The core component of an operating system, responsible for managing system resources, hardware interactions, and core processes'
+                ]
+            },
+
+            L: {
+                terms: ['Linux', 'LAN'],
+                descriptions: [
+                    'Linux:An open-source operating system known for its stability, security, and widespread use in servers, embedded systems, and desktops',
+                    'LAN:Local Area Network-A network that connects devices within a limited area, like a home, office, or building, allowing resource sharing'
+                ]
+            },
+            M: {
+                terms: ['Machine Learning', 'MySQL'],
+                descriptions: [
+                    'Machine Learning:A branch of artificial intelligence that enables computers to learn from data patterns and improve performance without explicit programming',
+                    'MySQL:An open-source relational database management system widely used for managing data in web applications and enterprise environments'
+                ]
+            },
+
+            N: {
+                terms: ['Network', 'NIC'],
+                descriptions: [
+                    'Network:A group of interconnected devices that communicate with each other to share resources, data, and services',
+                    'NIC:Network Interface Card-A hardware component that allows a computer to connect to a network, enabling communication with other devices'
+                ]
+            },
+
+            O: {
+                terms: ['Operating System', 'Open Source'],
+                descriptions: [
+                    'Operating System:The primary software that manages computer hardware and provides an environment for applications to run, such as Windows, macOS, or Linux',
+                    'Open Source:A software model where the source code is freely available for anyone to view, modify, and distribute, promoting collaborative development'
+                ]
+            },
+
+            P: {
+                terms: ['Python', 'Protocol'],
+                descriptions: [
+                    'Python:A versatile, high-level programming language known for its readability and extensive libraries, widely used in web development, data science, and AI',
+                    'Protocol:A set of rules and conventions for data communication between devices, ensuring reliable data exchange, such as HTTP, FTP, or TCP/IP'
+                ]
+            },
+
+            Q: {
+                terms: ['Quantum Computing', 'Query'],
+                descriptions: [
+                    'Quantum Computing:An advanced computing model that leverages quantum mechanics to process data at unprecedented speeds, aiming to solve complex problems beyond the capabilities of classical computers',
+                    'Query:A request for information from a database, allowing users to retrieve specific data by specifying criteria'
+                ]
+            },
+
+            R: {
+                terms: ['Router', 'RAM'],
+                descriptions: [
+                    'Router:A network device that directs data packets between different networks, enabling internet connectivity and communication between devices',
+                    'RAM:Random Access Memory-A type of computer memory that temporarily stores data for quick access, helping the CPU process tasks faster'
+                ]
+            },
+
+            S: {
+                terms: ['Server', 'SQL'],
+                descriptions: [
+                    'Server:A computer or system that provides resources, data, or services to other computers over a network, enabling functions like web hosting and data storage',
+                    'SQL:Structured Query Language-A language used to manage and query databases, essential for data retrieval, manipulation, and storage'
+                ]
+            },
+
+            T: {
+                terms: ['Terabyte', 'Token Ring'],
+                descriptions: [
+                    'Terabyte:A unit of digital storage equal to 1,024 gigabytes, commonly used to measure storage capacity in hard drives and data centers',
+                    'Token Ring:A network protocol where devices pass a token around the network, allowing orderly data transmission without collisions'
+                ]
+            },
+
+            U: {
+                terms: ['URL', 'USB'],
+                descriptions: [
+                    'URL:Uniform Resource Locator-The address used to access resources on the internet, such as webpages, files, or images',
+                    'USB:Universal Serial Bus-A standard connection interface for transferring data and power between devices, commonly used for peripherals like keyboards, mice, and storage drives'
+                ]
+            },
+
+            V: {
+                terms: ['VPN', 'Virtualization'],
+                descriptions: [
+                    'VPN:Virtual Private Network-A secure network connection over the internet that encrypts data and protects privacy, commonly used for remote access',
+                    'Virtualization:The process of creating virtual versions of physical hardware, such as servers or storage, to optimize resource use and flexibility'
+                ]
+            },
+
+            W: {
+                terms: ['WLAN', 'WAN'],
+                descriptions: [
+                    'WLAN:A type of local network that connects devices within a limited area without physical cables, often using Wi-Fi',
+                    'WAN:A network that spans a large geographical area, connecting multiple smaller networks like LANs across cities or countries'
+                ]
+            },
+
+            X: {
+                terms: ['XAML', 'XSS'],
+                descriptions: [
+                    'XAML:A markup language used to structure, store, and transport data in a readable format for both humans and machines',
+                    'XSS:A security vulnerability that allows attackers to inject malicious scripts into web applications, compromising user data'
+                ]
+            },
+
+            Y: {
+                terms: ['Yottabyte', 'YARN'],
+                descriptions: [
+                    'Yottabyte:A unit of digital storage equal to one septillion bytes, used to describe massive data capacities',
+                    'YARN: Yet Another Resource Negotiator-A resource management technology in Apache Hadoop that handles scheduling and cluster management for big data processing'
+                ]
+            },
+
+            Z: {
+                terms: ['Zettabyte', 'Zip File'],
+                descriptions: [
+                    'Zettabyte: A unit of digital storage equal to one sextillion bytes used to measure extremely large data volumes',
+                    'Zip File: A compressed file format that reduces file sizes for easier storage and sharing, bundling multiple files in one archive'
+                ]
+            }
+        };
+
+        // Array of random colors
+        const colors = ['yellow', 'lightblue', 'lightgreen', 'pink', 'lightcoral', 'lavender'];
+
+        // Function to get a random color
+        function getRandomColor() {
+            const randomIndex = Math.floor(Math.random() * colors.length);
+            return colors[randomIndex];
+        }
+
+        // State to track which term is being shown
+        let state = {
+            A: 0, B: 0, C: 0, D: 0, E: 0, F: 0, G: 0, H: 0, I: 0, J: 0, K: 0, L: 0, M: 0, N: 0, O: 0, P: 0,
+            Q: 0, R: 0, S: 0, T: 0, U: 0, V: 0, W: 0, X: 0, Y: 0, Z: 0
+        };
+        let isSpeechEnabled = false;
+
+        // Update the EnableBtn text and toggle speech
+        document.getElementById('EnableBtn').addEventListener('click', function () {
+            isSpeechEnabled = !isSpeechEnabled;
+            document.getElementById('EnableBtn').textContent = isSpeechEnabled ? "AudioN" : "AudioY";
+        });
+
+        // Function to handle letter clicks
+        function handleClick(letter) {
+            // Get the current index of the term to show
+            const termIndex = state[letter];
+
+            // Display only the term
+            const term = data[letter].terms[termIndex];
+            document.getElementById('displayText').textContent = term;
+
+            // Speak the description
+            const description = data[letter].descriptions[termIndex];
+            if (isSpeechEnabled) {
+                speakText(description);
+            }
+
+            // Update the state to show the next term on the next click
+            state[letter] = (termIndex + 1) % data[letter].terms.length;
+        }
+
+        // Function to speak the text
+        function speakText(text) {
+            window.speechSynthesis.cancel(); // Clears any existing speech
+            const utterance = new SpeechSynthesisUtterance(text);
+            window.speechSynthesis.speak(utterance);
+        }
+
+        // function speakText(text) {
+        //     const utterance = new SpeechSynthesisUtterance(text);
+        //     speechSynthesis.speak(utterance);
+        // }
+        // Event listeners for clicks
+        document.getElementById('letterA').addEventListener('click', () => handleClick('A'));
+        document.getElementById('letterB').addEventListener('click', () => handleClick('B'));
+        document.getElementById('letterC').addEventListener('click', () => handleClick('C'));
+        document.getElementById('letterD').addEventListener('click', () => handleClick('D'));
+        document.getElementById('letterE').addEventListener('click', () => handleClick('E'));
+        document.getElementById('letterF').addEventListener('click', () => handleClick('F'));
+        document.getElementById('letterG').addEventListener('click', () => handleClick('G'));
+        document.getElementById('letterH').addEventListener('click', () => handleClick('H'));
+        document.getElementById('letterI').addEventListener('click', () => handleClick('I'));
+        document.getElementById('letterJ').addEventListener('click', () => handleClick('J'));
+        document.getElementById('letterK').addEventListener('click', () => handleClick('K'));
+        document.getElementById('letterL').addEventListener('click', () => handleClick('L'));
+        document.getElementById('letterM').addEventListener('click', () => handleClick('M'));
+        document.getElementById('letterN').addEventListener('click', () => handleClick('N'));
+        document.getElementById('letterO').addEventListener('click', () => handleClick('O'));
+        document.getElementById('letterP').addEventListener('click', () => handleClick('P'));
+        document.getElementById('letterQ').addEventListener('click', () => handleClick('Q'));
+        document.getElementById('letterR').addEventListener('click', () => handleClick('R'));
+        document.getElementById('letterS').addEventListener('click', () => handleClick('S'));
+        document.getElementById('letterT').addEventListener('click', () => handleClick('T'));
+        document.getElementById('letterU').addEventListener('click', () => handleClick('U'));
+        document.getElementById('letterV').addEventListener('click', () => handleClick('V'));
+        document.getElementById('letterW').addEventListener('click', () => handleClick('W'));
+        document.getElementById('letterX').addEventListener('click', () => handleClick('X'));
+        document.getElementById('letterY').addEventListener('click', () => handleClick('Y'));
+        document.getElementById('letterZ').addEventListener('click', () => handleClick('Z'));
+
+        document.getElementById('helpBtn').addEventListener('click', function () {
+            const helpText = document.getElementById('helpText');
+            if (helpText.style.display === 'none' || helpText.style.display === '') {
+                helpText.style.display = 'block';
+            } else {
+                helpText.style.display = 'none';
+            }
+        });
+
+
+    </script>
+</body>
+
+</html>
